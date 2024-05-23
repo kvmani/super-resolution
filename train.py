@@ -53,7 +53,8 @@ class Trainer:
 
             if step % evaluate_every == 0:
                 loss_value = loss_mean.result()
-                loss_mean.reset_states()
+                loss_mean.reset_state()
+                loss_mean = Mean()
 
                 # Compute PSNR on validation dataset
                 psnr_value = self.evaluate(valid_dataset)
@@ -167,8 +168,8 @@ class SrganTrainer:
 
             if step % 50 == 0:
                 print(f'{step}/{steps}, perceptual loss = {pls_metric.result():.4f}, discriminator loss = {dls_metric.result():.4f}')
-                pls_metric.reset_states()
-                dls_metric.reset_states()
+                pls_metric.reset_state()
+                dls_metric.reset_state()
 
     @tf.function
     def train_step(self, lr, hr):
